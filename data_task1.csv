@@ -1,0 +1,35 @@
+Marketing material,Marketing material type,Marketing material cost,Fixture,Fixture Type,Zone,Room area,Room max people,Room,Office,Office address,Office city,Office State,Office phone,Office lob,Office type
+New credit card brochure,Brochure,30,Standing desk A,Standing desk,Staff,10,3,Lobby,New York Main,"New York, NY 10018, United States",New York,NY,12127684242,Commercial,Office
+Home loans poster,Poster,55,Main door,Door,Lobby,43,10,Lobby,New York Main,"New York, NY 10018, United States",New York,NY,12127684242,Commercial,Office
+Best offer poster,Poster,100,Main window,Window,Lobby,43,10,Lobby,New York Main,"New York, NY 10018, United States",New York,NY,12127684242,Commercial,Office
+Mobile app poster,Poster,66,Wall poster A,Wall poster,Lobby,43,10,Lobby,New York Main,"New York, NY 10018, United States",New York,NY,12127684242,Commercial,Office
+Latest news poster,Poster,66,Wall poster B,Wall poster,Lobby,43,10,Lobby,New York Main,"New York, NY 10018, United States",New York,NY,12127684242,Commercial,Office
+Family support,Sticker,12,Cabinet Table A,Table,Private,21,4,Cabinet 1,New York Main,"New York, NY 10018, United States",New York,NY,12127684242,Commercial,Office
+Family support,Sticker,12,Cabinet Table B,Table,Private,21,4,Cabinet 2,New York Main,"New York, NY 10018, United States",New York,NY,12127684242,Commercial,Office
+Creative solutions,Print,44,ATM wall Top,ATM Wall,Exterrior,1,1,ATM Front,ATM Macy_s,"151 W 34th St, New York, NY 10001, United States",New York,NY,12126954400,Commercial,ATM
+Latest news,Print,44,ATM wall Top,ATM Wall,Exterrior,1,1,ATM Front,ATM Empire States building,"20 W 34th St, New York, NY 10001, United States",New York,NY,12127363100,Commercial,ATM
+Jewellery poster,Poster,100,Main door,Door,Lobby,40,8,Lobby,New York VIP,"72 Terrace Dr, New York, NY 10021, United States",New York,NY,12123106600,Commercial,Office
+BMW poster,Poster,80,Main window,Window,Lobby,40,8,Lobby,New York VIP,"72 Terrace Dr, New York, NY 10021, United States",New York,NY,12123106600,Commercial,Office
+IBM poster,Poster,70,Secondary window,Window,Lobby,40,8,Lobby,New York VIP,"72 Terrace Dr, New York, NY 10021, United States",New York,NY,12123106600,Commercial,Office
+VIP Flag,Flag,120,Flag near door,Flag,Exterrior,1,0,Office Exterior,New York VIP,"72 Terrace Dr, New York, NY 10021, United States",New York,NY,12123106600,Commercial,Office
+Security details,Poster,44,Wall poster A,Wall poster,Safe,6,2,Safe Storage,New York VIP,"72 Terrace Dr, New York, NY 10021, United States",New York,NY,12123106600,Commercial,Office
+Platinum card,Poster,44,Wall poster B,Wall poster,Safe,6,2,Safe Storage,New York VIP,"72 Terrace Dr, New York, NY 10021, United States",New York,NY,12123106600,Commercial,Office
+Safety instructions,Brochure,30,Cabinet Table A,Table,Private,8,2,Cabinet 1,New York VIP,"72 Terrace Dr, New York, NY 10021, United States",New York,NY,12123106600,Commercial,Office
+Creative solutions,Print,44,ATM wall Top,ATM Wall,Exterrior,1,1,ATM Front,ATM Airport,"Queens, NY 11430, United States",New York,NY,17182444444,Commercial,ATM
+Ecology matters,Print,44,ATM wall Top,ATM Wall,Exterrior,1,1,ATM Front,ATM Park,"2551 Motor Ave, Los Angeles, CA 90064, United States",Los Angeles,CA,13108375186,Commercial,ATM
+Cinema,Print,90,ATM wall Top,ATM Wall,Exterrior,1,1,ATM Front,ATM Hollywood,"Los Angeles, CA 90068, United States",Los Angeles,CA,13232584338,Commercial,ATM
+Bred Pit advert,Poster,120,Wall poster A,Wall poster,Private,22,4,Cabinet 1,Los Angeles Primary,"5515 Melrose Ave, Los Angeles, CA 90038, United States",Los Angeles,CA,13239561777,Commercial,Office
+Safety instructions,Brochure,30,Cabinet Table A,Table,Private,22,4,Cabinet 1,Los Angeles Primary,"5515 Melrose Ave, Los Angeles, CA 90038, United States",Los Angeles,CA,13239561777,Commercial,Office
+Hollywood advert,Poster,150,Cabinet 1 Window,Window,Private,22,4,Cabinet 1,Los Angeles Primary,"5515 Melrose Ave, Los Angeles, CA 90038, United States",Los Angeles,CA,13239561777,Commercial,Office
+Will Smith advert,Poster,120,Wall poster B,Wall poster,Private,20,4,Cabinet 2,Los Angeles Primary,"5515 Melrose Ave, Los Angeles, CA 90038, United States",Los Angeles,CA,13239561777,Commercial,Office
+Safety instructions,Brochure,30,Cabinet Table B,Table,Private,20,4,Cabinet 2,Los Angeles Primary,"5515 Melrose Ave, Los Angeles, CA 90038, United States",Los Angeles,CA,13239561777,Commercial,Office
+Hollywood advert,Poster,150,Cabinet B Window,Window,Private,20,4,Cabinet 2,Los Angeles Primary,"5515 Melrose Ave, Los Angeles, CA 90038, United States",Los Angeles,CA,13239561777,Commercial,Office
+Hollywood Flag,Flag,120,Flag near door A,Flag,Exterrior,1,0,Office Exterior,Los Angeles Primary,"5515 Melrose Ave, Los Angeles, CA 90038, United States",Los Angeles,CA,13239561777,Commercial,Office
+Hollywood Flag,Flag,120,Flag near door B,Flag,Exterrior,1,0,Office Exterior,Los Angeles Primary,"5515 Melrose Ave, Los Angeles, CA 90038, United States",Los Angeles,CA,13239561777,Commercial,Office
+New credit card brochure,Brochure,30,Standing desk A,Standing desk,Lobby,44,15,Lobby,Los Angeles Primary,"5515 Melrose Ave, Los Angeles, CA 90038, United States",Los Angeles,CA,13239561777,Commercial,Office
+Home loans poster,Poster,55,Main door,Door,Lobby,44,15,Lobby,Los Angeles Primary,"5515 Melrose Ave, Los Angeles, CA 90038, United States",Los Angeles,CA,13239561777,Commercial,Office
+Best offer poster,Poster,100,Main window,Window,Lobby,44,15,Lobby,Los Angeles Primary,"5515 Melrose Ave, Los Angeles, CA 90038, United States",Los Angeles,CA,13239561777,Commercial,Office
+Home loans poster,Poster,55,Main door,Door,Lobby,21,5,Lobby,Walt Charity,"111 S Grand Ave, Los Angeles, CA 90012, United States",Los Angeles,CA,13238502000,Charity,Office
+Mobile app poster,Poster,66,Wall poster A,Wall poster,Lobby,21,5,Lobby,Walt Charity,"111 S Grand Ave, Los Angeles, CA 90012, United States",Los Angeles,CA,13238502000,Charity,Office
+Latest news poster,Poster,66,Wall poster B,Wall poster,Lobby,21,5,Lobby,Walt Charity,"111 S Grand Ave, Los Angeles, CA 90012, United States",Los Angeles,CA,13238502000,Charity,Office
+Best offer poster,Poster,100,Main window,Window,Lobby,21,5,Lobby,Walt Charity,"111 S Grand Ave, Los Angeles, CA 90012, United States",Los Angeles,CA,13238502000,Charity,Office

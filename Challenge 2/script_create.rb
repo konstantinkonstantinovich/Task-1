@@ -7,7 +7,7 @@ conn.exec(
   'Door',
    'Window',
    'Wall poster',
-   'table',
+   'Table',
    'ATM Wall',
    'Flag',
    'Standing desk'

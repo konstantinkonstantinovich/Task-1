@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Appendix B</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body>
+
+  <style media="screen">
+    h1 {
+      text-align: center;
+      padding: 45px;
+    }
+
+    h2 {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .logo {
+      margin: 25px auto;
+      width: 60%;
+      height: 100px;
+      border: 1px solid black;
+    }
+
+
+    .title {
+        margin: 25px auto;
+        text-align: center;
+        font-size: 25px;
+    }
+
+    .hr-block {
+      border-bottom: 1px solid black;
+    }
+
+    .center {
+      text-align: center;
+      padding: 15px;
+    }
+
+  </style>
+  <div class="container">
+
+    <div class='row'>
+      <div class="col-sm-4">
+         <div class='logo'>
+           <div class="title">Logo</div>
+         </div>
+      </div>
+      <div class="col-sm-8">
+          <h1>State Report</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-2 hr-block"><h2><%= @result[0]["state"] %></h2></div>
+      <div class="col-10 hr-block"></div>
+
+      <div class="w-100 d-none d-md-block"></div>
+
+
+
+
+      <!-- line two -->
+
+      <%@result.each do |office| %>
+
+        <div class="col-2">
+        </div>
+        <div class="col-2">
+          <div class="center"><%= office["title"] %></div>
+        </div>
+        <div class="col-2">
+          <div class="center"><%= office["type"] %></div>
+        </div>
+        <div class="col-4">
+          <div class="center"><%= office["address"] %></div>
+        </div>
+        <div class="col-2">
+          <div class="center"><%= office["lob"] %></div>
+        </div>
+
+        <% end %>
+
+    </div>
+
+
+    <br>
+
+    <!-- <div class="row">
+      <div class="col-2 hr-block"><h2>State</h2></div>
+      <div class="col-10 hr-block"></div>
+
+      <div class="w-100 d-none d-md-block"></div>
+
+      <div class="col-2">
+      </div>
+      <div class="col-2">
+        <div class="center">Office</div>
+      </div>
+      <div class="col-2">
+        <div class="center">Type</div>
+      </div>
+      <div class="col-4">
+        <div class="center">address</div>
+      </div>
+      <div class="col-2">
+        <div class="center">lob</div>
+    </div>
+
+
+
+
+      <div class="col-2">
+      </div>
+      <div class="col-2">
+        <div class="center">Office</div>
+      </div>
+      <div class="col-2">
+        <div class="center">Type</div>
+      </div>
+      <div class="col-4">
+        <div class="center">address</div>
+      </div>
+      <div class="col-2">
+        <div class="center">lob</div>
+      </div>
+    </div> -->
+  </div>
+
+</body>
+</html>

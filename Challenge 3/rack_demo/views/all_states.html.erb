@@ -54,38 +54,45 @@
           <h1>State Report</h1>
       </div>
     </div>
+
+    <%@offices.each_with_index do |office, index| %>
+
     <div class="row">
-      <div class="col-2 hr-block"><h2><%= @result[0]["state"] %></h2></div>
+      <div class="col-2 hr-block"><h2><%= office[index]["state"] %></h2></div>
       <div class="col-10 hr-block"></div>
 
       <div class="w-100 d-none d-md-block"></div>
+      <%office.each do |data| %>
 
 
 
 
-      <!-- line two -->
 
-      <%@result.each do |office| %>
+        <!-- line two -->
 
-        <div class="col-2">
-        </div>
-        <div class="col-2">
-          <div class="center"><%= office["title"] %></div>
-        </div>
-        <div class="col-2">
-          <div class="center"><%= office["type"] %></div>
-        </div>
-        <div class="col-4">
-          <div class="center"><%= office["address"] %></div>
-        </div>
-        <div class="col-2">
-          <div class="center"><%= office["lob"] %></div>
-        </div>
+          <div class="col-2">
+          </div>
+          <div class="col-2">
+            <div class="center"><%= data["title"] %></div>
+          </div>
+          <div class="col-2">
+            <div class="center"><%= data["type"] %></div>
+          </div>
+          <div class="col-4">
+            <div class="center"><%= data["address"] %></div>
+          </div>
+          <div class="col-2">
+            <div class="center"><%= data["lob"] %></div>
+          </div>
+
+
+
+
 
         <% end %>
-
-    </div>
-
+        </div>
+        <br>
+      <% end %>
 
   </div>
 

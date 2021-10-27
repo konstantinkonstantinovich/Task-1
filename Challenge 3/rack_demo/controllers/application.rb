@@ -126,39 +126,3 @@ class App
       [200, { "Content-Type" => "text/html" }, [body.result]]
     end
 end
-
-
-class Challenge4
-
-  def call(env)
-    request = Rack::Request.new(env)
-    index(request, env)
-  end
-
-  def index(request, env)
-    $conn = PG.connect(:dbname => 'bank_system', :password => 'apple', :port => 5432, :user => 'postgres')
-
-    # split given url to get param
-    url_param = env['REQUEST_URI'].split('/')
-
-    # Make a request to Postgres db
-    # to find all offices with a certain STATE
-
-    if env['REQUEST_URI'] == '/reports/states/ca' or env['REQUEST_URI'] == '/reports/states/ny'
-      @result = $conn.exec(
-        "SELECT * from offices WHERE state = '#{url_param[3].upcase}' "
-      )
-    else
-      Rack::Response.new(
-        "<h1>Incorrect Url: No result for this url #{env['REQUEST_URI']}</h1> ",
-        200,
-        {"Content-Type" => "text/html"})
-    end
-
-
-    template = File.read("views/index.html.erb")
-    content = ERB.new(template)
-    ['200', {"Content-Type" => "text/html"}, [content.result(binding)]]
-  end
-
-end

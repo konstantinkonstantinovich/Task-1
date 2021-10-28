@@ -57,45 +57,6 @@
         </div>
       </div>
 
-      <% @office.each_with_index do |(key, value), index| %>
-        <div class='row'>
-          <div class="col-4 hr-block">
-            <h2><%= key %></h2>
-          </div>
-          <div class="col-5 hr-block"></div>
-
-          <div class="col-3 hr-block">
-            <h3><%= @total_count[index][0]["count"] %></h3>
-          </div>
-
-          <!-- line beetwen row one and two -->
-
-          <div class="w-100 d-none d-md-block"></div>
-
-          <% value.each do |data| %>
-            <div class="col-2">
-            </div>
-            <div class="col-1">
-              <div class="center"><%= data[0]["title"]%></div>
-            </div>
-            <div class="col-2">
-              <div class="center"><%= data[0]["type"]%></div>
-            </div>
-            <div class="col-3">
-              <div class="center"><%= data[0]["address"]%></div>
-            </div>
-            <div class="col-2">
-              <div class="center"><%= data[0]["lob"]%></div>
-            </div>
-            <div class="col-2">
-              <div class="center">Sub Total Count</div>
-            </div>
-          <% end %>
-
-        </div>
-        <br>
-
-      <% end %>
 
 
 
@@ -107,13 +68,13 @@
 
 
 
-      <!-- <br>
+      <br>
 
       <div class='row'>
-        <div class="col-3 hr-block">
-          <h2>Fixture Type</h2>
+        <div class="col-4 hr-block">
+          <h2><%= @office_title[0]['title'] %></h2>
         </div>
-        <div class="col-6 hr-block"></div>
+        <div class="col-5 hr-block"></div>
 
         <div class="col-3 hr-block">
           <h3>Total Count</h3>
@@ -123,28 +84,31 @@
 
         <div class="w-100 d-none d-md-block"></div>
 
+        <% @fixture_type.each do |data| %>
+
+          <% data.each do |fixtures| %>
+
+            <div class="col-3">
+            </div>
+            <div class="col-3">
+              <div class="center"><%= fixtures["name"] %></div>
+            </div>
+            <div class="col-3">
+              <div class="center"><%= fixtures["type"] %></div>
+            </div>
+            <div class="col-3">
+              <div class="center">Sub Total Count</div>
+            </div>
+
+          <% end %>
 
 
-        <div class="col-2">
-        </div>
-        <div class="col-1">
-          <div class="center">Office</div>
-        </div>
-        <div class="col-2">
-          <div class="center">Type</div>
-        </div>
-        <div class="col-3">
-          <div class="center">address</div>
-        </div>
-        <div class="col-2">
-          <div class="center">LOB</div>
-        </div>
-        <div class="col-2">
-          <div class="center">Sub Total Count</div>
-        </div>
+        <% end %>
 
 
-      </div> -->
+
+
+      </div>
 
 
     </div>

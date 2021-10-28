@@ -101,7 +101,7 @@ class App
       table.by_row.each do |data|
         begin
           $conn.exec(
-            "INSERT INTO marketing_material (id, type, name, cost, fixture_id)
+            "INSERT INTO marketing_material (id, name, type, cost, fixture_id)
              VALUES (
                DEFAULT,
                '#{data['Marketing material']}',

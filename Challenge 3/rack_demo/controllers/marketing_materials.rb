@@ -46,14 +46,16 @@ class MarketingMaterialsReport
 
     # print @total_cost
     #
-    # @new_hash.each do |key, value|
-    #   puts "#{key} => "
-    #   print value
-    #   puts
-    #
-    #
-    #
-    # end
+
+    @labels = Hash.new {|h,k| h[k]=[]}
+    @data = Hash.new {|h,k| h[k]=[]}
+    @new_hash.each do |key, value|
+      value.each do |k, v|
+        @labels[key] << k
+        @data[key] << v
+      end
+    end
+
 
     body = ERB.new(template)
     [200, {"Content-Type" => "text/html"}, [body.result(binding)]]

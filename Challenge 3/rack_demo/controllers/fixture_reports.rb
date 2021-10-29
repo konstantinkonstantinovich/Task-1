@@ -59,33 +59,30 @@ class FixtureReport
     template = File.read('views/fixture.html.erb')
 
     begin
-      zones_id = $conn.exec(
-        "SELECT id FROM zones WHERE office_id = #{env['rack.route_params'][:id]}"
-      )
+      @new_hash = Hash.new
+      @office_title = $conn.exec("SELECT title FROM offices WHERE id = #{env['rack.route_params'][:id]}")[0]
 
-      @office_title = $conn.exec("SELECT title FROM offices WHERE id = #{env['rack.route_params'][:id]}")
+      puts @office_title
 
-      rooms_id = []
-      zones_id.each do |data|
-        puts "#{data["id"]} - zone"
-        rooms_id.push($conn.exec(
-          "SELECT id FROM rooms WHERE zone_id = #{data["id"]}"
-        ))
-      end
+      @new_hash[@office_title["title"]] = $conn.exec(
+       "SELECT fixtures.type
+        FROM ((( offices
+        INNER JOIN zones ON offices.id = zones.office_id)
+        INNER JOIN rooms ON zones.id = rooms.zone_id)
+        INNER JOIN fixtures ON rooms.id = fixtures.room_id)
+        WHERE offices.id = #{env['rack.route_params'][:id]};
+        ")
 
-      @fixture_type = []
-      rooms_id.each do |data|
-        data.each do |room|
-          puts "#{room["id"]} - room"
-          @fixture_type.push($conn.exec("SELECT * FROM fixtures WHERE room_id = #{room["id"]}"))
+      @new_hash.each { |key, value| @new_hash[key] = value.inject(Hash.new(0)) { |memo, i| memo[i] += 1; memo } }
+
+      @total_count = 0
+      @new_hash.each do |key, value|
+        puts "#{key} => "
+        value.each do |k, v|
+          @total_count += v
         end
       end
 
-      @fixture_type.each do |data|
-        data.each do |fixture|
-          puts fixture
-        end
-      end
 
       body = ERB.new(template)
       [200, {"Content-Type" => "text/html"}, [body.result(binding)]]

@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Appendix C</title>
+    <title>Appendix D</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   </head>
   <body>
@@ -53,56 +53,48 @@
            </div>
         </div>
         <div class="col-sm-8">
-            <h1>Fixture Report</h1>
+            <h1>Marketing Material Cost Report</h1>
         </div>
       </div>
 
-
-
-
-
-
-
-
-
-
-
-
       <br>
 
-      <div class='row'>
-        <div class="col-4 hr-block">
-          <h2><%= @office_title['title'] %></h2>
-        </div>
-        <div class="col-5 hr-block"></div>
+      <% @new_hash.each_with_index do |(key, value), index| %>
+        <div class='row'>
+          <div class="col-4 hr-block">
+            <h2><%= key %></h2>
+          </div>
+          <div class="col-5 hr-block"></div>
 
-        <div class="col-3 hr-block">
-          <h3><%= @total_count %></h3>
-        </div>
-
-
-
-        <div class="w-100 d-none d-md-block"></div>
+          <div class="col-3 hr-block">
+            <h3><%= @total_cost[index] %></h3>
+          </div>
 
 
-        <% @new_hash.each do |key, value| %>
-          <% value.each do |k, v| %>
+
+          <div class="w-100 d-none d-md-block"></div>
+
+
+          <% value.each do |data| %>
             <div class="col-3">
             </div>
 
             <div class="col-6">
-              <div class="center"><%= k["type"]%></div>
+              <div class="center"><%= data[0] %></div>
             </div>
             <div class="col-3">
-              <div class="center"><%= v %></div>
+              <div class="center"><%= data[1]%></div>
             </div>
 
           <% end %>
 
-        <% end %>
+        </div>
+
+        <br>
+        <br>
 
 
-      </div>
+      <% end %>
 
 
     </div>

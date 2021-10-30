@@ -94,9 +94,9 @@
         <br>
         <br>
 
-        <canvas id="doughnut-chart" width="800" height="450"></canvas>
+        <canvas id="<%= key %>" width="800" height="450"></canvas>
         <script>
-          new Chart(document.getElementById("doughnut-chart"), {
+          new Chart(document.getElementById("<%= key %>"), {
               type: 'doughnut',
               data: {
                 labels: <%= @labels[key]%>,

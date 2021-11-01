@@ -1,10 +1,15 @@
 #config.ru
 require './controllers/application'
 require './controllers/state_report'
-require './controllers/fixture_reports.rb'
+require './controllers/fixture_reports'
 require './controllers/marketing_materials'
+require './controllers/office_installation'
 require 'rack/router'
 
+
+use Rack::Static,
+:urls => ["/css"],
+:root => "public"
 
 # application routing
 app = Rack::Router.new {
@@ -14,6 +19,7 @@ app = Rack::Router.new {
   get '/reports/offices/fixture_types'=>AllFixture.new
   get '/reports/offices/:id/fixture_types' => FixtureReport.new
   get '/reports/offices/marketing_materials' => MarketingMaterialsReport.new
+  get '/reports/offices/:id/installation' => OfficeInstallation.new
 }
 
 run app

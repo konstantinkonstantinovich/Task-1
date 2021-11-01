@@ -1,0 +1,37 @@
+h1 {
+  text-align: center;
+}
+
+h2 {
+  text-align: center;
+  padding-top: 17px;
+}
+
+h3 {
+  text-align: left;
+
+}
+h5 {
+  text-align: center;
+
+}
+
+.logo {
+  margin: 25px auto;
+  width: 60%;
+  height: 100px;
+  border: 1px solid black;
+}
+.center {
+  text-align: center;
+  padding: 6px;
+}
+
+.title {
+    margin: 25px auto;
+    text-align: center;
+    font-size: 25px;
+}
+.hr-block {
+  border-bottom: 1px solid black;
+}

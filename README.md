@@ -1,1 +1,25 @@
 # Task-1
+
+This project implements a Ruby-based tool to import and store information about marketing materials and provide various kinds of reports using HTML and CSS templates. The base implementation contains a set of Ruby scripts executed through the console to create a PostgreSQL database, import data, and generate static HTML / CSS files with reports.
+A more advanced layer is implemented in a rack-based application that is capable of receiving HTTP requests, uploading files, and generating reports on the fly.
+
+---
+
+# Usage
+## Install
+The project is written in `Ruby` language.
+
+In order to start the project, you need to run a several of commands:
+
+* To create tables in the database, go to the `./Challenge 2` folder and run:
+
+```
+ruby script_create.rb
+
+```
+* To delete tables, you need to run:
+
+```
+ruby script_drop.rb
+
+```

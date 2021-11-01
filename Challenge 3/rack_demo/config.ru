@@ -13,6 +13,7 @@ use Rack::Static,
 
 # application routing
 app = Rack::Router.new {
+  get '/'=>App.new
   post '/'=>App.new
   get '/reports/states'=>AllStates.new
   get '/reports/states/:state'=>StateReport.new
@@ -20,6 +21,7 @@ app = Rack::Router.new {
   get '/reports/offices/:id/fixture_types' => FixtureReport.new
   get '/reports/offices/marketing_materials' => MarketingMaterialsReport.new
   get '/reports/offices/installation' => OfficeInstallationRoot.new
+  post '/reports/offices/installation' => OfficeInstallationRoot.new
   get '/reports/offices/:id/installation' => OfficeInstallation.new
 
 }

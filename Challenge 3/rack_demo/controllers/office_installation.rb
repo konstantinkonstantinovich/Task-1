@@ -12,9 +12,26 @@ class OfficeInstallationRoot
     $conn = PG.connect(:dbname => 'bank_system', :password => 'apple', :port => 5432, :user => 'postgres')
     template = File.read('views/root_installation.html.erb')
 
-    @offices_id = $conn.exec(
-      "SELECT id, title FROM offices"
-    )
+    @response = nil
+    if request.post? && request.POST["text"].length != 0
+      params = request.POST
+      @response = $conn.exec("
+        ALTER TABLE offices ADD COLUMN IF NOT EXISTS ts tsvector
+            GENERATED ALWAYS AS
+                (setweight(to_tsvector('english', coalesce(title, '')), 'A') ||
+                 setweight(to_tsvector('english', coalesce(address, '')), 'B')) STORED;
+
+        SELECT id, title, state, phone, address, type
+        FROM offices
+        WHERE ts @@ to_tsquery('english', '#{params["text"]}');
+        ")
+    else
+      @response = $conn.exec(
+        "SELECT id, title FROM offices"
+      )
+
+    end
+
 
     body = ERB.new(template)
     [200, {"Content-Type" => "text/html"}, [body.result(binding)]]

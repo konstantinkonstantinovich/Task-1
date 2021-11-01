@@ -5,6 +5,7 @@
     <title>Appendix E</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/office_installation.css">
+    
   </head>
   <body>
 
@@ -21,8 +22,8 @@
 
             <h2><%= @office["title"].upcase %></h2>
             <h5><%= " #{@office["state"]},  #{@office["address"]}, #{@office["phone"]}, #{@office["type"]}"%></h5>
-            <h5>Total Area</h5>
-            <h5>Total Max People Count</h5>
+            <h5>Total Area: <%= @sum[0]["area"] %></h5>
+            <h5>Total Max People Count: <%= @sum[0]["people"] %></h5>
         </div>
       </div>
 

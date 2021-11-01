@@ -22,8 +22,14 @@ ruby script_create.rb
 ```
 * To delete tables, you need to run:
 
-```
+```sh
 ruby script_drop.rb
 
 ```
 
+* To start rack app get to `./Challenge 3/rack_demo` folder and run:
+
+```sh
+rackup
+
+```

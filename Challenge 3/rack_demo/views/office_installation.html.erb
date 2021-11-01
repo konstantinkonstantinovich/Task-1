@@ -32,266 +32,48 @@
       <h1>Installation Instructions</h1>
 
       <div class="row">
+        <% @response_hash.each do |key, value| %>
 
-        <!-- zone 1 line -->
+            <!-- zone 1 line -->
 
-        <div class="col">
-          <h3>Zone 1</h3>
-        </div>
+            <div class="col">
+              <h3><%= key %></h3>
+            </div>
 
-        <div class="w-100 d-none d-md-block"></div>
-        <div class="col-1">
-        </div>
+            <div class="w-100 d-none d-md-block"></div>
 
-        <!-- room 1 line -->
-        <div class="col-11">
-          <h3>Room 1</h3>
-        </div>
+            <!-- room 1 line -->
 
-        <div class="w-100 d-none d-md-block"></div>
+            <% value.each do |k, v| %>
+                <div class="col-1">
+                </div>
+                <div class="col-11">
+                  <h3><%= k %></h3>
+                </div>
 
+                <div class="w-100 d-none d-md-block"></div>
 
-        <!-- row line 1 -->
-        <div class="col-1">
-        </div>
-        <div class="col-4">
-          <div class="center">Marketing Material</div>
-        </div>
-        <div class="col-3">
-          <div class="center">Marketing Material Type</div>
-        </div>
-        <div class="col-2">
-          <div class="center">Fixture</div>
-        </div>
-        <div class="col-2">
-          <div class="center">Fixture Type</div>
-        </div>
+                <% v.each do |data| %>
+                    <!-- row line 1 -->
+                    <div class="col-1">
+                    </div>
+                    <div class="col-3">
+                      <div class="center"><%= data["marketing_material_name"] %></div>
+                    </div>
+                    <div class="col-3">
+                      <div class="center"><%= data["marketing_material_type"] %></div>
+                    </div>
+                    <div class="col-3">
+                      <div class="center"><%= data["fixture_name"]%></div>
+                    </div>
+                    <div class="col-2">
+                      <div class="center"><%= data["fixture_type"]%></div>
+                    </div>
 
-        <!-- row line 2 -->
-        <div class="col-1">
-        </div>
-        <div class="col-4">
-          <div class="center">Marketing Material</div>
-        </div>
-        <div class="col-3">
-          <div class="center">Marketing Material Type</div>
-        </div>
-        <div class="col-2">
-          <div class="center">Fixture</div>
-        </div>
-        <div class="col-2">
-          <div class="center">Fixture Type</div>
-        </div>
-
-        <!-- row line 3 -->
-        <div class="col-1">
-        </div>
-        <div class="col-4">
-          <div class="center">Marketing Material</div>
-        </div>
-        <div class="col-3">
-          <div class="center">Marketing Material Type</div>
-        </div>
-        <div class="col-2">
-          <div class="center">Fixture</div>
-        </div>
-        <div class="col-2">
-          <div class="center">Fixture Type</div>
-        </div>
-
-
-        <!-- room 2 line -->
-        <div class="col-1">
-        </div>
-
-        <div class="col-11">
-          <h3>Room 2</h3>
-        </div>
-
-        <div class="w-100 d-none d-md-block"></div>
-
-
-        <!-- row line 1 -->
-        <div class="col-1">
-        </div>
-        <div class="col-4">
-          <div class="center">Marketing Material</div>
-        </div>
-        <div class="col-3">
-          <div class="center">Marketing Material Type</div>
-        </div>
-        <div class="col-2">
-          <div class="center">Fixture</div>
-        </div>
-        <div class="col-2">
-          <div class="center">Fixture Type</div>
-        </div>
-
-        <!-- row line 2 -->
-        <div class="col-1">
-        </div>
-        <div class="col-4">
-          <div class="center">Marketing Material</div>
-        </div>
-        <div class="col-3">
-          <div class="center">Marketing Material Type</div>
-        </div>
-        <div class="col-2">
-          <div class="center">Fixture</div>
-        </div>
-        <div class="col-2">
-          <div class="center">Fixture Type</div>
-        </div>
-
-        <!-- row line 3 -->
-        <div class="col-1">
-        </div>
-        <div class="col-4">
-          <div class="center">Marketing Material</div>
-        </div>
-        <div class="col-3">
-          <div class="center">Marketing Material Type</div>
-        </div>
-        <div class="col-2">
-          <div class="center">Fixture</div>
-        </div>
-        <div class="col-2">
-          <div class="center">Fixture Type</div>
-        </div>
-
-
-
-
-        <!-- zone 2 line -->
-
-        <div class="col">
-          <h3>Zone 1</h3>
-        </div>
-
-        <div class="w-100 d-none d-md-block"></div>
-        <div class="col-1">
-        </div>
-
-        <!-- room 1 line -->
-        <div class="col-11">
-          <h3>Room 1</h3>
-        </div>
-
-        <div class="w-100 d-none d-md-block"></div>
-
-
-        <!-- row line 1 -->
-        <div class="col-1">
-        </div>
-        <div class="col-4">
-          <div class="center">Marketing Material</div>
-        </div>
-        <div class="col-3">
-          <div class="center">Marketing Material Type</div>
-        </div>
-        <div class="col-2">
-          <div class="center">Fixture</div>
-        </div>
-        <div class="col-2">
-          <div class="center">Fixture Type</div>
-        </div>
-
-        <!-- row line 2 -->
-        <div class="col-1">
-        </div>
-        <div class="col-4">
-          <div class="center">Marketing Material</div>
-        </div>
-        <div class="col-3">
-          <div class="center">Marketing Material Type</div>
-        </div>
-        <div class="col-2">
-          <div class="center">Fixture</div>
-        </div>
-        <div class="col-2">
-          <div class="center">Fixture Type</div>
-        </div>
-
-        <!-- row line 3 -->
-        <div class="col-1">
-        </div>
-        <div class="col-4">
-          <div class="center">Marketing Material</div>
-        </div>
-        <div class="col-3">
-          <div class="center">Marketing Material Type</div>
-        </div>
-        <div class="col-2">
-          <div class="center">Fixture</div>
-        </div>
-        <div class="col-2">
-          <div class="center">Fixture Type</div>
-        </div>
-
-
-        <!-- room 2 line -->
-        <div class="col-1">
-        </div>
-
-        <div class="col-11">
-          <h3>Room 2</h3>
-        </div>
-
-        <div class="w-100 d-none d-md-block"></div>
-
-
-        <!-- row line 1 -->
-        <div class="col-1">
-        </div>
-        <div class="col-4">
-          <div class="center">Marketing Material</div>
-        </div>
-        <div class="col-3">
-          <div class="center">Marketing Material Type</div>
-        </div>
-        <div class="col-2">
-          <div class="center">Fixture</div>
-        </div>
-        <div class="col-2">
-          <div class="center">Fixture Type</div>
-        </div>
-
-        <!-- row line 2 -->
-        <div class="col-1">
-        </div>
-        <div class="col-4">
-          <div class="center">Marketing Material</div>
-        </div>
-        <div class="col-3">
-          <div class="center">Marketing Material Type</div>
-        </div>
-        <div class="col-2">
-          <div class="center">Fixture</div>
-        </div>
-        <div class="col-2">
-          <div class="center">Fixture Type</div>
-        </div>
-
-        <!-- row line 3 -->
-        <div class="col-1">
-        </div>
-        <div class="col-4">
-          <div class="center">Marketing Material</div>
-        </div>
-        <div class="col-3">
-          <div class="center">Marketing Material Type</div>
-        </div>
-        <div class="col-2">
-          <div class="center">Fixture</div>
-        </div>
-        <div class="col-2">
-          <div class="center">Fixture Type</div>
-        </div>
-
-
+                <% end %>
+            <% end %>
+        <% end %>
       </div>
-
-
     </div>
 
 

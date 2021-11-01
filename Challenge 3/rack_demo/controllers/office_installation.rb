@@ -20,58 +20,46 @@ class OfficeInstallation
       )
 
       rooms = Hash.new
+      @response_hash = Hash.new
 
       zones.each do |data|
+        rooms[data["type"]] = $conn.exec(
+          "SELECT name, id FROM rooms WHERE zone_id = #{data["id"]}"
+          )
+      end
+
+      rooms.each do |key, value|
+        # puts "#{key} => "
+        temp = Hash.new
+        value.each do |data|
+          # puts data
+          # puts "------------"
+          marketing_material_fixtures = $conn.exec(
+            "SELECT mm.type marketing_material_type, mm.name marketing_material_name, fix.name fixture_name, fix.type fixture_type
+             FROM (( rooms
+             INNER JOIN fixtures fix ON rooms.id = fix.room_id)
+             INNER JOIN marketing_material mm ON fix.id = mm.fixture_id)
+             WHERE rooms.id = #{data["id"]}"
+          )
+
+          temp.store(data["name"], marketing_material_fixtures)
+          @response_hash[key] = temp
+
+        end
 
       end
 
-
-      mf = []
-
-      mf << $conn.exec(
-          "SELECT mm.type marketing_material_type, mm.name marketing_material_name, fix.name fixture_name, fix.type fixture_type
-           FROM (((( offices
-           INNER JOIN zones ON offices.id = zones.office_id)
-           INNER JOIN rooms ON zones.id = rooms.zone_id)
-           INNER JOIN fixtures fix ON rooms.id = fix.room_id)
-           INNER JOIN marketing_material mm ON fix.id = mm.fixture_id)
-           WHERE offices.id = #{env['rack.route_params'][:id]};
-           "
-        )
-
-
-
-      result = nil
-
-      result = $conn.exec(
-        "SELECT row_to_json(o)
-        FROM (
-            SELECT zones.type,
-             (
-              SELECT array_to_json(array_agg(row_to_json(z)))
-              FROM (
-                SELECT rooms.name,
-                (
-                  SELECT array_to_json(array_agg(row_to_json(r)))
-                  FROM (
-                    SELECT fixtures.type, fixtures.name
-                    FROM fixtures
-                    WHERE room_id = rooms.id
-
-
-                  ) r
-
-                ) as rooms
-
-                FROM rooms
-                WHERE rooms.zone_id = zones.id
-              ) z
-
-             ) as zone
-            FROM zones
-            WHERE zones.office_id = #{env['rack.route_params'][:id]}
-        ) o;"
-      )
+      @response_hash.each do |key, value|
+        puts "#{key} => "
+        value.each do |k, v|
+          puts
+          print "#{k} -->"
+          v. each do |data|
+            puts data
+          end
+          puts "-----------"
+        end
+      end
 
       body = ERB.new(template)
       [200, {"Content-Type" => "text/html"}, [body.result(binding)]]

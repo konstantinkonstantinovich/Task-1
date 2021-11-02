@@ -1,8 +1,11 @@
 require 'pg'
 require 'erb'
+require './controllers/render'
 
 
 class OfficeInstallationRoot
+
+  include Render
 
   def db_connect
     conn = PG.connect(:dbname => 'bank_system', :password => 'apple', :port => 5432, :user => 'postgres')
@@ -15,7 +18,6 @@ class OfficeInstallationRoot
 
   def index(request, env)
     $conn = db_connect
-    template = File.read('views/root_installation.html.erb')
 
     @response = nil
     if request.post? && request.POST["text"].length != 0
@@ -37,14 +39,14 @@ class OfficeInstallationRoot
 
     end
 
-
-    body = ERB.new(template)
-    [200, {"Content-Type" => "text/html"}, [body.result(binding)]]
+    render_template 'views/root_installation.html.erb'
   end
 
 end
 
 class OfficeInstallation
+
+  include Render
 
   def db_connect
     conn = PG.connect(:dbname => 'bank_system', :password => 'apple', :port => 5432, :user => 'postgres')
@@ -57,7 +59,6 @@ class OfficeInstallation
 
   def index(request, env)
     $conn = db_connect
-    template = File.read('views/office_installation.html.erb')
     begin
       @office = $conn.exec("SELECT title, state, address, phone, type FROM offices WHERE id = #{env['rack.route_params'][:id]}")[0]
 
@@ -97,8 +98,7 @@ class OfficeInstallation
            WHERE offices.id = #{env['rack.route_params'][:id]};"
       )
 
-      body = ERB.new(template)
-      [200, {"Content-Type" => "text/html"}, [body.result(binding)]]
+      render_template 'views/office_installation.html.erb'
     rescue IndexError
       [200, {"Content-Type" => "text/html"}, ["<h1>ERROR: Non-existent id in url parameters. Change params!</h1>"]]
     end

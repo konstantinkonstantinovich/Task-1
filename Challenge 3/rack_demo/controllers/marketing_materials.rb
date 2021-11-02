@@ -1,8 +1,11 @@
 require 'pg'
 require 'erb'
+require './controllers/render'
 
 
 class MarketingMaterialsReport
+
+  include Render
 
   def db_connect
     conn = PG.connect(:dbname => 'bank_system', :password => 'apple', :port => 5432, :user => 'postgres')
@@ -15,7 +18,6 @@ class MarketingMaterialsReport
 
   def index(request, env)
     $conn = db_connect
-    template = File.read('views/marketing_materials.html.erb')
 
     @marketing_materials = Hash.new {|h,k| h[k]=[]}
 
@@ -61,9 +63,7 @@ class MarketingMaterialsReport
       end
     end
 
-
-    body = ERB.new(template)
-    [200, {"Content-Type" => "text/html"}, [body.result(binding)]]
+    render_template 'views/marketing_materials.html.erb'
   end
 
 end

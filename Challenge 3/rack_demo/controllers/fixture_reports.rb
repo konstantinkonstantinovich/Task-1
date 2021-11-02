@@ -1,7 +1,11 @@
 require 'pg'
 require 'erb'
+require './controllers/render'
+
 
 class AllFixture
+
+  include Render
 
   def db_connect
     conn = PG.connect(:dbname => 'bank_system', :password => 'apple', :port => 5432, :user => 'postgres')
@@ -13,12 +17,9 @@ class AllFixture
   end
 
   def index(request, env)
-    $conn = PG.connect(:dbname => 'bank_system', :password => 'apple', :port => 5432, :user => 'postgres')
-    template = File.read('views/fixtures.html.erb')
-
     $conn = db_connect
-    # get all fixtures data
 
+    # get all fixtures data
     @fixtures = $conn.exec(
       "SELECT * FROM fixtures"
     )
@@ -44,17 +45,14 @@ class AllFixture
 
     @office.each { |key, value| @office[key] = value.inject(Hash.new(0)) { |memo, i| memo[i] += 1; memo } }
 
-    # @office.each do |key, value|
-    #   @office[key] = value.inject(Hash.new(0)) { |memo, i| memo[i] += 1; memo }
-    # end
-
-    body = ERB.new(template)
-    [200, {"Content-Type" => "text/html"}, [body.result(binding)]]
+    render_template 'views/fixtures.html.erb'
   end
 end
 
 
 class FixtureReport
+
+  include Render
 
   def db_connect
     conn = PG.connect(:dbname => 'bank_system', :password => 'apple', :port => 5432, :user => 'postgres')
@@ -67,7 +65,6 @@ class FixtureReport
 
   def index(request, env)
     $conn = db_connect
-    template = File.read('views/fixture.html.erb')
 
     begin
       @new_hash = Hash.new
@@ -94,10 +91,7 @@ class FixtureReport
         end
       end
 
-
-      body = ERB.new(template)
-      [200, {"Content-Type" => "text/html"}, [body.result(binding)]]
-
+      render_template 'views/fixture.html.erb'
     rescue IndexError
       [200, {"Content-Type" => "text/html"}, ["<h1>ERROR: Non-existent id in url parameters. Change params!</h1>"]]
     end

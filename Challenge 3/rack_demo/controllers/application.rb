@@ -1,9 +1,12 @@
 require 'csv'
 require 'pg'
 require 'erb'
+require './controllers/render'
 
 
 class App
+
+  include Render
 
   def db_connect
     conn = PG.connect(:dbname => 'bank_system', :password => 'apple', :port => 5432, :user => 'postgres')
@@ -124,8 +127,6 @@ class App
       end
     end
 
-      template = File.read("views/upload.html.erb")
-      body = ERB.new(template)
-      [200, { "Content-Type" => "text/html" }, [body.result]]
+      render_template 'views/upload.html.erb'
     end
 end

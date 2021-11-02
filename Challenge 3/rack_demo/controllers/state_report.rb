@@ -1,7 +1,11 @@
 require 'pg'
 require 'erb'
+require './controllers/render'
+
 
 class StateReport
+
+  include Render
 
   def db_connect
     conn = PG.connect(:dbname => 'bank_system', :password => 'apple', :port => 5432, :user => 'postgres')
@@ -29,16 +33,15 @@ class StateReport
         {"Content-Type" => "text/html"})
     end
 
-
-    template = File.read("views/index.html.erb")
-    content = ERB.new(template)
-    ['200', {"Content-Type" => "text/html"}, [content.result(binding)]]
+    render_template 'views/index.html.erb'
   end
 
 end
 
 
 class AllStates
+
+  include Render
 
   def db_connect
     conn = PG.connect(:dbname => 'bank_system', :password => 'apple', :port => 5432, :user => 'postgres')
@@ -69,10 +72,6 @@ class AllStates
       ))
     end
 
-
-    template = File.read("views/all_states.html.erb")
-    content = ERB.new(template)
-    ['200', {"Content-Type" => "text/html"}, [content.result(binding)]]
-
+    render_template 'views/all_states.html.erb'
   end
 end

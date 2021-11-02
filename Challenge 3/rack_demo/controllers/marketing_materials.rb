@@ -17,16 +17,16 @@ class MarketingMaterialsReport
   end
 
   def index(request, env)
-    $conn = db_connect
+    conn = db_connect
 
     @marketing_materials = Hash.new {|h,k| h[k]=[]}
 
-    offices_title = $conn.exec("SELECT title, id FROM offices")
+    offices_title = conn.exec("SELECT title, id FROM offices")
 
     @new_hash = Hash.new
     result = Hash.new
     offices_title.each do |data|
-       result[data["title"]] = $conn.exec(
+       result[data["title"]] = conn.exec(
         "SELECT marketing_material.type, marketing_material.cost
          FROM (((( offices
          INNER JOIN zones ON offices.id = zones.office_id)
@@ -50,9 +50,6 @@ class MarketingMaterialsReport
       @total_cost << temp
     end
 
-
-    # print @total_cost
-    #
 
     @labels = Hash.new {|h,k| h[k]=[]}
     @data = Hash.new {|h,k| h[k]=[]}

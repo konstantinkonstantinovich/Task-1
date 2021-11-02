@@ -13,7 +13,7 @@ conn.exec(
    'Standing desk'
   );")
 
-offices = conn.exec('CREATE TABLE IF NOT EXISTS "offices" (
+conn.exec('CREATE TABLE IF NOT EXISTS "offices" (
     "id" SERIAL PRIMARY KEY,
     "title" varchar,
     "address" varchar,
@@ -25,9 +25,8 @@ offices = conn.exec('CREATE TABLE IF NOT EXISTS "offices" (
     UNIQUE(title, address, city, state, phone, lob, type)
   );')
 
-
-zones = conn.exec(
-    'CREATE TABLE IF NOT EXISTS "zones" (
+conn.exec(
+  'CREATE TABLE IF NOT EXISTS "zones" (
       "id" SERIAL PRIMARY KEY,
       "type" varchar,
       "office_id" integer NOT NULL,
@@ -36,8 +35,7 @@ zones = conn.exec(
     ALTER TABLE "zones" ADD FOREIGN KEY ("office_id") REFERENCES "offices" ("id");'
 )
 
-
-rooms = conn.exec(
+conn.exec(
   'CREATE TABLE IF NOT EXISTS "rooms" (
   "id" SERIAL PRIMARY KEY,
   "name" varchar,
@@ -49,7 +47,7 @@ rooms = conn.exec(
   ALTER TABLE "rooms" ADD FOREIGN KEY ("zone_id") REFERENCES "zones" ("id");'
 )
 
-fixtures = conn.exec(
+conn.exec(
   '
   CREATE TABLE IF NOT EXISTS "fixtures" (
     "id" SERIAL PRIMARY KEY,
@@ -60,8 +58,7 @@ fixtures = conn.exec(
   ALTER TABLE "fixtures" ADD FOREIGN KEY ("room_id") REFERENCES "rooms" ("id");'
 )
 
-
-marketing_material = conn.exec(
+conn.exec(
   'CREATE TABLE IF NOT EXISTS "marketing_material" (
     "id" SERIAL PRIMARY KEY,
     "type" varchar,

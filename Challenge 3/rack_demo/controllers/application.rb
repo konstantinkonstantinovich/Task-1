@@ -3,7 +3,6 @@ require 'pg'
 require 'erb'
 require './controllers/render'
 
-
 class App
 
   include Render
@@ -11,6 +10,7 @@ class App
   def db_connect
     conn = PG.connect(:dbname => 'bank_system', :password => 'apple', :port => 5432, :user => 'postgres')
   end
+
   # function, that parse data from uploaded CSV file
   def parse(path)
     table = CSV.parse(File.read(path), headers: true)
@@ -23,7 +23,7 @@ class App
 
   def index(request)
     # connect to Postgres
-    $conn = db_connect
+    conn = db_connect
 
     if request.post?
       table = parse(request.params['file'][:tempfile])
@@ -32,7 +32,7 @@ class App
 
       table.by_row.each do |data|
         begin
-          office = $conn.exec("INSERT INTO offices (id, title, address, city, state, phone, lob, type)
+          office = conn.exec("INSERT INTO offices (id, title, address, city, state, phone, lob, type)
               VALUES (DEFAULT,
                 '#{data['Office']}',
                 '#{data['Office address']}',
@@ -50,7 +50,7 @@ class App
 
       table.by_row.each do |data|
         begin
-          zones = $conn.exec(
+          zones = conn.exec(
             "INSERT INTO zones (id, type, office_id)
              VALUES (DEFAULT,
                '#{data['Zone']}',
@@ -65,7 +65,7 @@ class App
 
       table.by_row.each do |data|
         begin
-          rooms = $conn.exec(
+          rooms = conn.exec(
             "INSERT INTO rooms (id, name, area, max_people, zone_id)
              VALUES (
                DEFAULT,
@@ -85,7 +85,7 @@ class App
 
       table.by_row.each do |data|
         begin
-          fixtures = $conn.exec(
+          fixtures = conn.exec(
             "INSERT INTO fixtures (id, name, type, room_id)
              VALUES (
                DEFAULT,
@@ -106,7 +106,7 @@ class App
 
       table.by_row.each do |data|
         begin
-          $conn.exec(
+          conn.exec(
             "INSERT INTO marketing_material (id, name, type, cost, fixture_id)
              VALUES (
                DEFAULT,
@@ -127,6 +127,6 @@ class App
       end
     end
 
-      render_template 'views/upload.html.erb'
-    end
+    render_template 'views/upload.html.erb'
+  end
 end

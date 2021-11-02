@@ -12,6 +12,13 @@ A more advanced layer is implemented in a rack-based application that is capable
 ## Install
 The project is written in `Ruby` language.
 
+Before launching, you need to download certain `gems`
+
+``` sh
+bundler install
+
+```
+
 In order to start the project, you need to run a several of commands:
 
 * To create tables in the database, go to the `./Challenge 2` folder and run:

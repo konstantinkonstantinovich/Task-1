@@ -4,7 +4,6 @@
 ![npm](https://img.shields.io/badge/gem-v3.2.3-green)
 ![npm](https://img.shields.io/badge/pg-v1.2.3-blue)
 ![npm](https://img.shields.io/badge/erb-v2.2.0-orange)
-![npm](https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white)
 
 This project implements a Ruby-based tool to import and store information about marketing materials and provide various kinds of reports using HTML and CSS templates. The base implementation contains a set of Ruby scripts executed through the console to create a PostgreSQL database, import data, and generate static HTML / CSS files with reports.
 A more advanced layer is implemented in a rack-based application that is capable of receiving HTTP requests, uploading files, and generating reports on the fly.

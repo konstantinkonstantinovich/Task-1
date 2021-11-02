@@ -68,7 +68,22 @@ You can get to the page by the following url: ***http://127.0.0.1:9292/***
 
 ### Challenge 4
 
+This challenge implements the `state_report.rb` controller, which includes two classes for displaying all offices by state and offices by a certain state, respectively.
+
+* Page for getting all offices by state: ***http://127.0.0.1:9292/reports/states***
+
+
+<img width="1198" alt="Screenshot 2021-11-02 at 14 37 54" src="https://user-images.githubusercontent.com/75016737/139848158-01a1e556-f842-4e6c-a5ac-9f2a69f5e3af.png">
+
+
+* Page for getting offices by a certain state: ***http://127.0.0.1:9292/reports/states/ny***
+
+<img width="1162" alt="Screenshot 2021-11-02 at 14 35 22" src="https://user-images.githubusercontent.com/75016737/139847405-4f638b6c-6682-41ad-972f-857da58ad8a9.png">
+
+
 ### Challenge 5
+
+
 
 
 ### Challenge 6

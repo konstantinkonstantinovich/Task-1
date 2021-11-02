@@ -124,3 +124,4 @@ The second class displays data about the office with a specific ID from the url 
 
 # License
 
+[MIT](https://github.com/konstantinkonstantinovich/Task-1/blob/main/LICENSE)

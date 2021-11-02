@@ -5,6 +5,9 @@ require 'erb'
 
 class App
 
+  def db_connect
+    conn = PG.connect(:dbname => 'bank_system', :password => 'apple', :port => 5432, :user => 'postgres')
+  end
   # function, that parse data from uploaded CSV file
   def parse(path)
     table = CSV.parse(File.read(path), headers: true)
@@ -17,7 +20,7 @@ class App
 
   def index(request)
     # connect to Postgres
-    $conn = PG.connect(:dbname => 'bank_system', :password => 'apple', :port => 5432, :user => 'postgres')
+    $conn = db_connect
 
     if request.post?
       table = parse(request.params['file'][:tempfile])

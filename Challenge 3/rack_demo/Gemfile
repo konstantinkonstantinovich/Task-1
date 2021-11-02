@@ -1,0 +1,16 @@
+source "https://rubygems.org"
+
+# Provides a minimal, modular, and adaptable interface for developing web applications in Ruby
+gem 'rack'
+
+# A simple router for rack apps
+gem 'rack-router'
+
+# Puma is a simple, fast, threaded, and highly concurrent HTTP 1.1 server for Ruby/Rack applications
+gem 'puma'
+
+# Pg is the Ruby interface to the {PostgreSQL RDBMS}[http://www.postgresql.org/]
+gem 'pg', '~> 1.2', '>= 1.2.3'
+
+# An easy to use but powerful templating system for Ruby.
+gem 'erb'

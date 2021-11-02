@@ -3,13 +3,17 @@ require 'erb'
 
 class StateReport
 
+  def db_connect
+    conn = PG.connect(:dbname => 'bank_system', :password => 'apple', :port => 5432, :user => 'postgres')
+  end
+
   def call(env)
     request = Rack::Request.new(env)
     index(request, env)
   end
 
   def index(request, env)
-    $conn = PG.connect(:dbname => 'bank_system', :password => 'apple', :port => 5432, :user => 'postgres')
+    $conn = db_connect
 
     # Make a request to Postgres db
     # to find all offices with a certain STATE
@@ -35,23 +39,29 @@ end
 
 
 class AllStates
+
+  def db_connect
+    conn = PG.connect(:dbname => 'bank_system', :password => 'apple', :port => 5432, :user => 'postgres')
+  end
+
   def call(env)
     request = Rack::Request.new(env)
     index(request, env)
   end
 
   def index(request, env)
-    $conn = PG.connect(:dbname => 'bank_system', :password => 'apple', :port => 5432, :user => 'postgres')
+    $conn = db_connect
 
-    # split given url to get param
-    @all_office = $conn.exec(
+    all_office = $conn.exec(
       "SELECT state FROM offices"
     )
 
     array = []
-    @all_office .each { |data|  array.push(data["state"])}
+    all_office .each { |data|  array.push(data["state"])}
     array.uniq!
 
+    # Make a request to Postgres db
+    # to find all offices with a certain STATE
     @offices = []
     array.each do |data|
       @offices.push($conn.exec(
@@ -59,8 +69,7 @@ class AllStates
       ))
     end
 
-    # Make a request to Postgres db
-    # to find all offices with a certain STATE
+
     template = File.read("views/all_states.html.erb")
     content = ERB.new(template)
     ['200', {"Content-Type" => "text/html"}, [content.result(binding)]]

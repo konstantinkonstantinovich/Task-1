@@ -3,13 +3,18 @@ require 'erb'
 
 
 class OfficeInstallationRoot
+
+  def db_connect
+    conn = PG.connect(:dbname => 'bank_system', :password => 'apple', :port => 5432, :user => 'postgres')
+  end
+
   def call(env)
     request = Rack::Request.new(env)
     index(request, env)
   end
 
   def index(request, env)
-    $conn = PG.connect(:dbname => 'bank_system', :password => 'apple', :port => 5432, :user => 'postgres')
+    $conn = db_connect
     template = File.read('views/root_installation.html.erb')
 
     @response = nil
@@ -40,13 +45,18 @@ class OfficeInstallationRoot
 end
 
 class OfficeInstallation
+
+  def db_connect
+    conn = PG.connect(:dbname => 'bank_system', :password => 'apple', :port => 5432, :user => 'postgres')
+  end
+
   def call(env)
     request = Rack::Request.new(env)
     index(request, env)
   end
 
   def index(request, env)
-    $conn = PG.connect(:dbname => 'bank_system', :password => 'apple', :port => 5432, :user => 'postgres')
+    $conn = db_connect
     template = File.read('views/office_installation.html.erb')
     begin
       @office = $conn.exec("SELECT title, state, address, phone, type FROM offices WHERE id = #{env['rack.route_params'][:id]}")[0]

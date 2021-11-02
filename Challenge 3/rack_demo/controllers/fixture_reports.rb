@@ -2,6 +2,11 @@ require 'pg'
 require 'erb'
 
 class AllFixture
+
+  def db_connect
+    conn = PG.connect(:dbname => 'bank_system', :password => 'apple', :port => 5432, :user => 'postgres')
+  end
+
   def call(env)
     request = Rack::Request.new(env)
     index request, env
@@ -11,6 +16,7 @@ class AllFixture
     $conn = PG.connect(:dbname => 'bank_system', :password => 'apple', :port => 5432, :user => 'postgres')
     template = File.read('views/fixtures.html.erb')
 
+    $conn = db_connect
     # get all fixtures data
 
     @fixtures = $conn.exec(
@@ -49,13 +55,18 @@ end
 
 
 class FixtureReport
+
+  def db_connect
+    conn = PG.connect(:dbname => 'bank_system', :password => 'apple', :port => 5432, :user => 'postgres')
+  end
+
   def call(env)
     request = Rack::Request.new(env)
     index request, env
   end
 
   def index(request, env)
-    $conn = PG.connect(:dbname => 'bank_system', :password => 'apple', :port => 5432, :user => 'postgres')
+    $conn = db_connect
     template = File.read('views/fixture.html.erb')
 
     begin

@@ -3,23 +3,28 @@ require 'erb'
 
 
 class MarketingMaterialsReport
+
+  def db_connect
+    conn = PG.connect(:dbname => 'bank_system', :password => 'apple', :port => 5432, :user => 'postgres')
+  end
+
   def call(env)
     request = Rack::Request.new(env)
     index(request, env)
   end
 
   def index(request, env)
-    $conn = PG.connect(:dbname => 'bank_system', :password => 'apple', :port => 5432, :user => 'postgres')
+    $conn = db_connect
     template = File.read('views/marketing_materials.html.erb')
 
     @marketing_materials = Hash.new {|h,k| h[k]=[]}
 
-    @office_title = $conn.exec("SELECT title, id FROM offices")
+    offices_title = $conn.exec("SELECT title, id FROM offices")
 
     @new_hash = Hash.new
-    @result = Hash.new
-    @office_title.each do |data|
-       @result[data["title"]] = $conn.exec(
+    result = Hash.new
+    offices_title.each do |data|
+       result[data["title"]] = $conn.exec(
         "SELECT marketing_material.type, marketing_material.cost
          FROM (((( offices
          INNER JOIN zones ON offices.id = zones.office_id)
@@ -34,7 +39,7 @@ class MarketingMaterialsReport
 
     @total_cost = []
 
-    @result.each do |key, value|
+    result.each do |key, value|
       temp = 0
       value.each do |data|
         @new_hash[key][data["type"]] ? @new_hash[key][data["type"]] += data["cost"].to_i : @new_hash[key][data["type"]] = data["cost"].to_i

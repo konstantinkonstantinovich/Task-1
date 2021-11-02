@@ -12,7 +12,7 @@ A more advanced layer is implemented in a rack-based application that is capable
 ## Install
 The project is written in `Ruby` language.
 
-Before launching, you need to download certain `gems`
+Before launching, you need to download certain `gems` by going to the folder ./rack_demo
 
 ``` sh
 bundler install

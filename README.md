@@ -40,3 +40,35 @@ ruby script_drop.rb
 rackup
 
 ```
+
+## Description
+
+### Challenge 1
+
+Contains a file with the `png` extension in which the designed database is displayed.
+
+![db](https://user-images.githubusercontent.com/75016737/139842925-e732fcc9-5ab8-4fcd-91d7-ea5b42399c3a.png)
+
+### Challenge 2
+
+contains two scripts: `script_create.rb` - for creating tables of the designed database, `script_drop.rb` - for dropping.
+
+
+### Challenge 3
+
+
+Challenhe 1 implements the `application.rb` controller, which parses the uploaded CSV file and saves the data to the appropriate tables.
+
+You can get to the page by the following url: ***http://127.0.0.1:9292/***
+
+<img width="806" alt="Screenshot 2021-11-02 at 14 20 06" src="https://user-images.githubusercontent.com/75016737/139844872-a9805174-dd66-477a-b6da-62073a441b55.png">
+
+
+### Challenge 4
+
+### Challenge 5
+
+
+### Challenge 6
+
+### Challenge 7

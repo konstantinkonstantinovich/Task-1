@@ -13,10 +13,10 @@ class MarketingMaterialsReport
 
   def call(env)
     request = Rack::Request.new(env)
-    index(request, env)
+    index(request)
   end
 
-  def index(request, env)
+  def index(request)
     conn = db_connect
 
     @marketing_materials = Hash.new {|h,k| h[k]=[]}

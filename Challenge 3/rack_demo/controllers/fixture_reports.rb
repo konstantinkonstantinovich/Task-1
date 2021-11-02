@@ -12,10 +12,10 @@ class AllFixture
 
   def call(env)
     request = Rack::Request.new(env)
-    index request, env
+    index request
   end
 
-  def index(request, env)
+  def index(request)
     conn = db_connect
 
     # get all fixtures data

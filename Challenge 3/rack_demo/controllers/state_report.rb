@@ -47,14 +47,14 @@ class AllStates
 
   def call(env)
     request = Rack::Request.new(env)
-    index(request, env)
+    index(request)
   end
 
-  def index(request, env)
+  def index(request)
     conn = db_connect
 
     all_office = conn.exec(
-      "SELECT state FROM offices"
+      'SELECT state FROM offices'
     )
 
     array = []

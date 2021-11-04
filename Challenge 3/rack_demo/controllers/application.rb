@@ -32,15 +32,15 @@ class App
 
       table.by_row.each do |data|
         begin
-          office = conn.exec("INSERT INTO offices (id, title, address, city, state, phone, lob, type)
+          office = conn.exec_params("INSERT INTO offices (id, title, address, city, state, phone, lob, type)
               VALUES (DEFAULT,
-                '#{data['Office']}',
+                $1,
                 '#{data['Office address']}',
                 '#{data['Office city']}',
                 '#{data['Office State']}',
                 #{data['Office phone'].to_i},
                 '#{data['Office lob']}',
-                '#{data['Office type']}')")
+                '#{data['Office type']}')", [data["Office"]])
         rescue PG::UniqueViolation
           next
         end
@@ -50,11 +50,14 @@ class App
 
       table.by_row.each do |data|
         begin
-          zones = conn.exec(
+          #{data['Zone']}
+          #{data['Office']}
+          zones = conn.exec_params(
             "INSERT INTO zones (id, type, office_id)
              VALUES (DEFAULT,
-               '#{data['Zone']}',
-               (SELECT id from offices WHERE title = '#{data['Office']}'));"
+               $1,
+               (SELECT id from offices WHERE title = $2));",
+               [data['Zone'], data["Office"]]
           )
         rescue
           next PG::UniqueViolation
@@ -65,7 +68,7 @@ class App
 
       table.by_row.each do |data|
         begin
-          rooms = conn.exec(
+          rooms = conn.exec_params(
             "INSERT INTO rooms (id, name, area, max_people, zone_id)
              VALUES (
                DEFAULT,
@@ -74,7 +77,8 @@ class App
                '#{data['Room max people']}',
                (SELECT id FROM zones
                 WHERE (zones.type = '#{data['Zone']}'
-                  AND zones.office_id = (SELECT id from offices WHERE title = '#{data['Office']}'))));"
+                  AND zones.office_id = (SELECT id from offices WHERE title = $1))));",
+            [data["Office"]]
           )
         rescue
           next PG::UniqueViolation
@@ -85,7 +89,7 @@ class App
 
       table.by_row.each do |data|
         begin
-          fixtures = conn.exec(
+          fixtures = conn.exec_params(
             "INSERT INTO fixtures (id, name, type, room_id)
              VALUES (
                DEFAULT,
@@ -95,7 +99,8 @@ class App
                 WHERE ( rooms.name = '#{data['Room']}'
                 AND rooms.zone_id = (SELECT id from zones
                   WHERE (type = '#{data['Zone']}'
-                  AND office_id = (SELECT id from offices WHERE title = '#{data['Office']}'))))));"
+                  AND office_id = (SELECT id from offices WHERE title = $1))))));",
+            [data["Office"]]
           )
         rescue PG::InvalidTextRepresentation
           next
@@ -106,7 +111,7 @@ class App
 
       table.by_row.each do |data|
         begin
-          conn.exec(
+          conn.exec_params(
             "INSERT INTO marketing_material (id, name, type, cost, fixture_id)
              VALUES (
                DEFAULT,
@@ -119,7 +124,8 @@ class App
                   WHERE ( rooms.name = '#{data['Room']}'
                     AND rooms.zone_id = (SELECT id from zones
                       WHERE (type = '#{data['Zone']}'
-                      AND office_id = (SELECT id from offices WHERE title = '#{data['Office']}')))))));"
+                      AND office_id = (SELECT id from offices WHERE title = $1)))))));",
+            [data["Office"]]
           )
         rescue PG::CardinalityViolation
           next

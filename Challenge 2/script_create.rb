@@ -1,6 +1,6 @@
 require 'pg'
 
-conn = PG.connect(:dbname => 'bank_system', :password => 'apple', :port => 5432, :user => 'postgres')
+conn = PG.connect(dbname: 'bank_system', password: 'apple', port: 5432, user: 'postgres')
 
 conn.exec(
   "CREATE TYPE type_fixture AS ENUM (

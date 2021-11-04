@@ -1,4 +1,4 @@
-#config.ru
+# config.ru
 require './controllers/application'
 require './controllers/state_report'
 require './controllers/fixture_reports'
@@ -22,7 +22,6 @@ app = Rack::Router.new {
   get '/reports/offices/installation' => OfficeInstallationRoot.new
   post '/reports/offices/installation' => OfficeInstallationRoot.new
   get '/reports/offices/:id/installation' => OfficeInstallation.new
-
 }
 
 run app

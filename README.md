@@ -4,6 +4,9 @@
 ![npm](https://img.shields.io/badge/gem-v3.2.3-green)
 ![npm](https://img.shields.io/badge/pg-v1.2.3-blue)
 ![npm](https://img.shields.io/badge/erb-v2.2.0-orange)
+[![Ruby Style Guide](https://img.shields.io/badge/code_style-rubocop-brightgreen.svg)](https://github.com/rubocop/rubocop)
+
+
 
 This project implements a Ruby-based tool to import and store information about marketing materials and provide various kinds of reports using HTML and CSS templates. The base implementation contains a set of Ruby scripts executed through the console to create a PostgreSQL database, import data, and generate static HTML / CSS files with reports.
 A more advanced layer is implemented in a rack-based application that is capable of receiving HTTP requests, uploading files, and generating reports on the fly.
@@ -86,7 +89,7 @@ This challenge implements the `state_report.rb` controller, which includes two c
 ## Challenge 5
 
 The `fixture_reports.rb` controller implements the output of all offices of a certain fixture type and the output of all fixtures types for a specific office:
- 
+
 * Page for getting all offices for all fixtures type: ***http://127.0.0.1:9292/reports/offices/fixture_types***
 
 <img width="1209" alt="Screenshot 2021-11-02 at 18 54 39" src="https://user-images.githubusercontent.com/75016737/139910388-e078dca1-70cb-4c57-9284-3124a28f20c9.png">

@@ -4,11 +4,10 @@ require 'erb'
 require './controllers/render'
 
 class App
-
   include Render
 
   def db_connect
-    conn = PG.connect(:dbname => 'bank_system', :password => 'apple', :port => 5432, :user => 'postgres')
+    conn = PG.connect(dbname: 'bank_system', password: 'apple', port: 5432, user: 'postgres')
   end
 
   # function, that parse data from uploaded CSV file
@@ -32,7 +31,7 @@ class App
 
       table.by_row.each do |data|
         begin
-          office = conn.exec_params("INSERT INTO offices (id, title, address, city, state, phone, lob, type)
+          conn.exec_params("INSERT INTO offices (id, title, address, city, state, phone, lob, type)
               VALUES (DEFAULT,
                 $1,
                 '#{data['Office address']}',
@@ -50,14 +49,12 @@ class App
 
       table.by_row.each do |data|
         begin
-          #{data['Zone']}
-          #{data['Office']}
-          zones = conn.exec_params(
+          conn.exec_params(
             "INSERT INTO zones (id, type, office_id)
              VALUES (DEFAULT,
                $1,
                (SELECT id from offices WHERE title = $2));",
-               [data['Zone'], data["Office"]]
+            [data['Zone'], data["Office"]]
           )
         rescue
           next PG::UniqueViolation
@@ -68,7 +65,7 @@ class App
 
       table.by_row.each do |data|
         begin
-          rooms = conn.exec_params(
+          conn.exec_params(
             "INSERT INTO rooms (id, name, area, max_people, zone_id)
              VALUES (
                DEFAULT,
@@ -89,7 +86,7 @@ class App
 
       table.by_row.each do |data|
         begin
-          fixtures = conn.exec_params(
+          conn.exec_params(
             "INSERT INTO fixtures (id, name, type, room_id)
              VALUES (
                DEFAULT,

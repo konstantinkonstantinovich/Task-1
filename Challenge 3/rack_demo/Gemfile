@@ -1,3 +1,5 @@
+# frozen_string_literal: true.
+
 source "https://rubygems.org"
 
 # Provides a minimal, modular, and adaptable interface for developing web applications in Ruby
@@ -15,5 +17,6 @@ gem 'pg', '~> 1.2', '>= 1.2.3'
 # An easy to use but powerful templating system for Ruby.
 gem 'erb'
 
-# RuboCop is a Ruby code style checking and code formatting tool. It aims to enforce the community-driven Ruby Style Guide.
+# RuboCop is a Ruby code style checking and code formatting tool.
+# It aims to enforce the community-driven Ruby Style Guide.
 gem 'rubocop'

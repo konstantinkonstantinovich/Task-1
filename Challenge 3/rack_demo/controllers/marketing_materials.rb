@@ -2,13 +2,11 @@ require 'pg'
 require 'erb'
 require './controllers/render'
 
-
 class MarketingMaterialsReport
-
   include Render
 
   def db_connect
-    conn = PG.connect(:dbname => 'bank_system', :password => 'apple', :port => 5432, :user => 'postgres')
+    conn = PG.connect(dbname: 'bank_system', password: 'apple', port: 5432, user: 'postgres')
   end
 
   def call(env)
@@ -19,14 +17,14 @@ class MarketingMaterialsReport
   def index(request)
     conn = db_connect
 
-    @marketing_materials = Hash.new {|h,k| h[k]=[]}
+    @marketing_materials = Hash.new { |h, k| h[k] = [] }
 
     offices_title = conn.exec("SELECT title, id FROM offices")
 
-    @new_hash = Hash.new
-    result = Hash.new
+    @new_hash = {}
+    result = {}
     offices_title.each do |data|
-       result[data["title"]] = conn.exec(
+      result[data["title"]] = conn.exec(
         "SELECT marketing_material.type, marketing_material.cost
          FROM (((( offices
          INNER JOIN zones ON offices.id = zones.office_id)
@@ -44,15 +42,16 @@ class MarketingMaterialsReport
     result.each do |key, value|
       temp = 0
       value.each do |data|
-        @new_hash[key][data["type"]] ? @new_hash[key][data["type"]] += data["cost"].to_i : @new_hash[key][data["type"]] = data["cost"].to_i
+        @new_hash[key][data["type"]] ?
+        @new_hash[key][data["type"]] += data["cost"].to_i :
+        @new_hash[key][data["type"]] = data["cost"].to_i
         temp += data["cost"].to_i
       end
       @total_cost << temp
     end
 
-
-    @labels = Hash.new {|h,k| h[k]=[]}
-    @data = Hash.new {|h,k| h[k]=[]}
+    @labels = Hash.new { |h, k| h[k] = [] }
+    @data = Hash.new { |h, k| h[k] = [] }
     @new_hash.each do |key, value|
       value.each do |k, v|
         @labels[key] << k
@@ -62,5 +61,4 @@ class MarketingMaterialsReport
 
     render_template 'views/marketing_materials.html.erb'
   end
-
 end

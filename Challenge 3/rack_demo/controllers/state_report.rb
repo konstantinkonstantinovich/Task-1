@@ -3,11 +3,10 @@ require 'erb'
 require './controllers/render'
 
 class StateReport
-
   include Render
 
   def db_connect
-    conn = PG.connect(:dbname => 'bank_system', :password => 'apple', :port => 5432, :user => 'postgres')
+    conn = PG.connect(dbname: 'bank_system', password: 'apple', port: 5432, user: 'postgres')
   end
 
   def call(env)
@@ -29,28 +28,27 @@ class StateReport
       Rack::Response.new(
         "<h1>Incorrect Url: No result for this url #{env['REQUEST_URI']}</h1> ",
         200,
-        { "Content-Type" => "text/html" })
+        { 'Content-Type' => 'text/html' }
+      )
     end
 
     render_template 'views/index.html.erb'
   end
-
 end
 
 class AllStates
-
   include Render
 
   def db_connect
-    conn = PG.connect(:dbname => 'bank_system', :password => 'apple', :port => 5432, :user => 'postgres')
+    conn = PG.connect(dbname: 'bank_system', password: 'apple', port: 5432, user: 'postgres')
   end
 
   def call(env)
     request = Rack::Request.new(env)
-    index(request)
+    index
   end
 
-  def index(request)
+  def index
     conn = db_connect
 
     all_office = conn.exec(
@@ -66,8 +64,8 @@ class AllStates
     @offices = []
     array.each do |data|
       @offices.push(conn.exec(
-        "SELECT * FROM offices WHERE state = '#{data}'"
-      ))
+                      "SELECT * FROM offices WHERE state = '#{data}'"
+                    ))
     end
 
     render_template 'views/all_states.html.erb'

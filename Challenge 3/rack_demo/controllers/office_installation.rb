@@ -3,11 +3,10 @@ require 'erb'
 require './controllers/render'
 
 class OfficeInstallationRoot
-
   include Render
 
   def db_connect
-    conn = PG.connect(:dbname => 'bank_system', :password => 'apple', :port => 5432, :user => 'postgres')
+    conn = PG.connect(dbname: 'bank_system', password: 'apple', port: 5432, user: 'postgres')
   end
 
   def call(env)
@@ -40,33 +39,32 @@ class OfficeInstallationRoot
 
     render_template 'views/root_installation.html.erb'
   end
-
 end
 
 class OfficeInstallation
-
   include Render
 
   def db_connect
-    conn = PG.connect(:dbname => 'bank_system', :password => 'apple', :port => 5432, :user => 'postgres')
+    conn = PG.connect(dbname: 'bank_system', password: 'apple', port: 5432, user: 'postgres')
   end
 
   def call(env)
     request = Rack::Request.new(env)
-    index(request, env)
+    index(env)
   end
 
-  def index(request, env)
+  def index(env)
     conn = db_connect
     begin
-      @office = conn.exec("SELECT title, state, address, phone, type FROM offices WHERE id = #{env['rack.route_params'][:id]}")[0]
+      @office = conn.exec("SELECT title, state, address, phone, type FROM offices WHERE id =
+        #{env['rack.route_params'][:id]}")[0]
 
       zones = conn.exec(
         "SELECT type, id FROM zones WHERE office_id = #{env['rack.route_params'][:id]}"
       )
 
-      rooms = Hash.new
-      @response_hash = Hash.new
+      rooms = {}
+      @response_hash = {}
 
       zones.each do |data|
         rooms[data["type"]] = conn.exec(
@@ -78,7 +76,8 @@ class OfficeInstallation
         temp = Hash.new
         value.each do |data|
           marketing_material_fixtures = conn.exec(
-            "SELECT mm.type marketing_material_type, mm.name marketing_material_name, fix.name fixture_name, fix.type fixture_type
+            "SELECT mm.type marketing_material_type, mm.name marketing_material_name,
+             fix.name fixture_name, fix.type fixture_type
              FROM (( rooms
              INNER JOIN fixtures fix ON rooms.id = fix.room_id)
              INNER JOIN marketing_material mm ON fix.id = mm.fixture_id)
@@ -99,7 +98,7 @@ class OfficeInstallation
 
       render_template 'views/office_installation.html.erb'
     rescue IndexError
-      [200, { "Content-Type" => "text/html" }, ["<h1>ERROR: Non-existent id in url parameters. Change params!</h1>"]]
+      [200, { 'Content-Type' => 'text/html' }, ["<h1>ERROR: Non-existent id in url parameters. Change params!</h1>"]]
     end
   end
 end

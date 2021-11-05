@@ -2,13 +2,10 @@ require 'csv'
 require 'pg'
 require 'erb'
 require './controllers/render'
+require './controllers/pg_connect'
 
 class App
   include Render
-
-  def db_connect
-    conn = PG.connect(dbname: 'bank_system', password: 'apple', port: 5432, user: 'postgres')
-  end
 
   # function, that parse data from uploaded CSV file
   def parse(path)
@@ -22,8 +19,6 @@ class App
 
   def index(request)
     # connect to Postgres
-    conn = db_connect
-
     if request.post?
       table = parse(request.params['file'][:tempfile])
 
@@ -31,7 +26,7 @@ class App
 
       table.by_row.each do |data|
         begin
-          conn.exec_params("INSERT INTO offices (id, title, address, city, state, phone, lob, type)
+          CONN.exec_params("INSERT INTO offices (id, title, address, city, state, phone, lob, type)
               VALUES (DEFAULT,
                 $1,
                 '#{data['Office address']}',
@@ -49,7 +44,7 @@ class App
 
       table.by_row.each do |data|
         begin
-          conn.exec_params(
+          CONN.exec_params(
             "INSERT INTO zones (id, type, office_id)
              VALUES (DEFAULT,
                $1,
@@ -65,7 +60,7 @@ class App
 
       table.by_row.each do |data|
         begin
-          conn.exec_params(
+          CONN.exec_params(
             "INSERT INTO rooms (id, name, area, max_people, zone_id)
              VALUES (
                DEFAULT,
@@ -86,7 +81,7 @@ class App
 
       table.by_row.each do |data|
         begin
-          conn.exec_params(
+          CONN.exec_params(
             "INSERT INTO fixtures (id, name, type, room_id)
              VALUES (
                DEFAULT,
@@ -108,7 +103,7 @@ class App
 
       table.by_row.each do |data|
         begin
-          conn.exec_params(
+          CONN.exec_params(
             "INSERT INTO marketing_material (id, name, type, cost, fixture_id)
              VALUES (
                DEFAULT,

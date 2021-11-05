@@ -1,13 +1,10 @@
 require 'pg'
 require 'erb'
 require './controllers/render'
+require './controllers/pg_connect'
 
 class MarketingMaterialsReport
   include Render
-
-  def db_connect
-    conn = PG.connect(dbname: 'bank_system', password: 'apple', port: 5432, user: 'postgres')
-  end
 
   def call(env)
     request = Rack::Request.new(env)
@@ -15,16 +12,14 @@ class MarketingMaterialsReport
   end
 
   def index(request)
-    conn = db_connect
-
     @marketing_materials = Hash.new { |h, k| h[k] = [] }
 
-    offices_title = conn.exec("SELECT title, id FROM offices")
+    offices_title = CONN.exec("SELECT title, id FROM offices")
 
     @new_hash = {}
     result = {}
     offices_title.each do |data|
-      result[data["title"]] = conn.exec(
+      result[data["title"]] = CONN.exec(
         "SELECT marketing_material.type, marketing_material.cost
          FROM (((( offices
          INNER JOIN zones ON offices.id = zones.office_id)

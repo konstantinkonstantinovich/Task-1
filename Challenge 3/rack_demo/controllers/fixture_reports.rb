@@ -1,13 +1,10 @@
 require 'pg'
 require 'erb'
 require './controllers/render'
+require './controllers/pg_connect'
 
 class AllFixture
   include Render
-
-  def db_connect
-    conn = PG.connect(dbname: 'bank_system', password: 'apple', port: 5432, user: 'postgres')
-  end
 
   def call(env)
     request = Rack::Request.new(env)
@@ -15,10 +12,8 @@ class AllFixture
   end
 
   def index(request)
-    conn = db_connect
-
     # get all fixtures data
-    @fixtures = conn.exec(
+    @fixtures = CONN.exec(
       "SELECT * FROM fixtures"
     )
 
@@ -28,7 +23,7 @@ class AllFixture
     @office = Hash.new { |h, k| h[k] = [] }
 
     @fixtures.each do |data|
-      @office[data['type']] << conn.exec(
+      @office[data['type']] << CONN.exec(
         "SELECT * FROM offices WHERE id =
          (SELECT office_id FROM zones WHERE id =
          (SELECT zone_id FROM rooms WHERE id = '#{data['room_id']}'))"
@@ -38,7 +33,7 @@ class AllFixture
     @total_count = []
 
     @office.each do |key, value|
-      @total_count.push(conn.exec(
+      @total_count.push(CONN.exec(
                           "SELECT COUNT(*) FROM fixtures WHERE type = '#{key}'"
                         ))
     end
@@ -52,25 +47,19 @@ end
 class FixtureReport
   include Render
 
-  def db_connect
-    conn = PG.connect(dbname: 'bank_system', password: 'apple', port: 5432, user: 'postgres')
-  end
-
   def call(env)
     request = Rack::Request.new(env)
     index request, env
   end
 
   def index(request, env)
-    conn = db_connect
-
     begin
       @new_hash = {}
-      @office_title = conn.exec("SELECT title FROM offices WHERE id = #{env['rack.route_params'][:id]}")[0]
+      @office_title = CONN.exec("SELECT title FROM offices WHERE id = #{env['rack.route_params'][:id]}")[0]
 
       puts @office_title
 
-      @new_hash[@office_title["title"]] = conn.exec(
+      @new_hash[@office_title["title"]] = CONN.exec(
         "SELECT fixtures.type
         FROM ((( offices
         INNER JOIN zones ON offices.id = zones.office_id)

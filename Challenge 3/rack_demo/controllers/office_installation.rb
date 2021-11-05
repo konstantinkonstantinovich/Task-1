@@ -1,13 +1,10 @@
 require 'pg'
 require 'erb'
 require './controllers/render'
+require './controllers/pg_connect'
 
 class OfficeInstallationRoot
   include Render
-
-  def db_connect
-    conn = PG.connect(dbname: 'bank_system', password: 'apple', port: 5432, user: 'postgres')
-  end
 
   def call(env)
     request = Rack::Request.new(env)
@@ -15,12 +12,10 @@ class OfficeInstallationRoot
   end
 
   def index(request)
-    conn = db_connect
-
     @response = nil
     if request.post? && request.POST["text"].length != 0
       params = request.POST
-      @response = conn.exec("
+      @response = CONN.exec("
         ALTER TABLE offices ADD COLUMN IF NOT EXISTS ts tsvector
             GENERATED ALWAYS AS
                 (setweight(to_tsvector('english', coalesce(title, '')), 'A') ||
@@ -31,7 +26,7 @@ class OfficeInstallationRoot
         WHERE ts @@ to_tsquery('english', '#{params["text"]}');
         ")
     else
-      @response = conn.exec(
+      @response = CONN.exec(
         "SELECT id, title FROM offices"
       )
 
@@ -44,22 +39,17 @@ end
 class OfficeInstallation
   include Render
 
-  def db_connect
-    conn = PG.connect(dbname: 'bank_system', password: 'apple', port: 5432, user: 'postgres')
-  end
-
   def call(env)
     request = Rack::Request.new(env)
     index(env)
   end
 
   def index(env)
-    conn = db_connect
     begin
-      @office = conn.exec("SELECT title, state, address, phone, type FROM offices WHERE id =
+      @office = CONN.exec("SELECT title, state, address, phone, type FROM offices WHERE id =
         #{env['rack.route_params'][:id]}")[0]
 
-      zones = conn.exec(
+      zones = CONN.exec(
         "SELECT type, id FROM zones WHERE office_id = #{env['rack.route_params'][:id]}"
       )
 
@@ -67,7 +57,7 @@ class OfficeInstallation
       @response_hash = {}
 
       zones.each do |data|
-        rooms[data["type"]] = conn.exec(
+        rooms[data["type"]] = CONN.exec(
           "SELECT name, id FROM rooms WHERE zone_id = #{data["id"]}"
         )
       end
@@ -75,7 +65,7 @@ class OfficeInstallation
       rooms.each do |key, value|
         temp = Hash.new
         value.each do |data|
-          marketing_material_fixtures = conn.exec(
+          marketing_material_fixtures = CONN.exec(
             "SELECT mm.type marketing_material_type, mm.name marketing_material_name,
              fix.name fixture_name, fix.type fixture_type
              FROM (( rooms
@@ -88,7 +78,7 @@ class OfficeInstallation
         end
       end
 
-      @sum = conn.exec(
+      @sum = CONN.exec(
         "SELECT SUM(rooms.area) area, SUM(rooms.max_people) people
          FROM (( offices
            INNER JOIN zones ON offices.id = zones.office_id)

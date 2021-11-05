@@ -1,13 +1,10 @@
 require 'pg'
 require 'erb'
 require './controllers/render'
+require './controllers/pg_connect'
 
 class StateReport
   include Render
-
-  def db_connect
-    conn = PG.connect(dbname: 'bank_system', password: 'apple', port: 5432, user: 'postgres')
-  end
 
   def call(env)
     request = Rack::Request.new(env)
@@ -15,13 +12,11 @@ class StateReport
   end
 
   def index(request, env)
-    conn = db_connect
-
     # Make a request to Postgres db
     # to find all offices with a certain STATE
 
     if env['REQUEST_URI'] == '/reports/states/ca' || env['REQUEST_URI'] == '/reports/states/ny'
-      @result = conn.exec(
+      @result = CONN.exec(
         "SELECT * from offices WHERE state = '#{env['rack.route_params'][:state].upcase}' "
       )
     else
@@ -51,7 +46,7 @@ class AllStates
   def index
     conn = db_connect
 
-    all_office = conn.exec(
+    all_office = CONN.exec(
       'SELECT state FROM offices'
     )
 
@@ -63,7 +58,7 @@ class AllStates
     # to find all offices with a certain STATE
     @offices = []
     array.each do |data|
-      @offices.push(conn.exec(
+      @offices.push(CONN.exec(
                       "SELECT * FROM offices WHERE state = '#{data}'"
                     ))
     end

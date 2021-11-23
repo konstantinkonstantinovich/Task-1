@@ -69,3 +69,10 @@ conn.exec(
   );
   ALTER TABLE "marketing_material" ADD FOREIGN KEY ("fixture_id") REFERENCES "fixtures" ("id");'
 )
+
+conn.exec(
+  "        ALTER TABLE offices ADD COLUMN IF NOT EXISTS ts tsvector
+              GENERATED ALWAYS AS
+                  (setweight(to_tsvector('english', coalesce(title, '')), 'A') ||
+                   setweight(to_tsvector('english', coalesce(address, '')), 'B')) STORED;"
+)

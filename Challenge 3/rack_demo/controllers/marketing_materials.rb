@@ -1,7 +1,7 @@
 require 'pg'
 require 'erb'
-require './controllers/render'
-require './controllers/pg_connect'
+require './render'
+require './pg_connect'
 
 class MarketingMaterialsReport
   include Render
@@ -10,6 +10,8 @@ class MarketingMaterialsReport
     request = Rack::Request.new(env)
     index(request)
   end
+
+  private
 
   def index(request)
     @marketing_materials = Hash.new { |h, k| h[k] = [] }

@@ -1,7 +1,7 @@
 require 'pg'
 require 'erb'
-require './controllers/render'
-require './controllers/pg_connect'
+require './render'
+require './pg_connect'
 
 class OfficeInstallationRoot
   include Render
@@ -11,16 +11,13 @@ class OfficeInstallationRoot
     index(request)
   end
 
+  private
+
   def index(request)
     @response = nil
     if request.post? && request.POST["text"].length != 0
       params = request.POST
       @response = CONN.exec("
-        ALTER TABLE offices ADD COLUMN IF NOT EXISTS ts tsvector
-            GENERATED ALWAYS AS
-                (setweight(to_tsvector('english', coalesce(title, '')), 'A') ||
-                 setweight(to_tsvector('english', coalesce(address, '')), 'B')) STORED;
-
         SELECT id, title, state, phone, address, type
         FROM offices
         WHERE ts @@ to_tsquery('english', '#{params["text"]}');

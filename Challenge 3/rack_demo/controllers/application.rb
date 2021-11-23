@@ -1,20 +1,21 @@
 require 'csv'
 require 'pg'
 require 'erb'
-require './controllers/render'
-require './controllers/pg_connect'
+require './render'
+require './pg_connect'
 
-class App
+class Application
   include Render
-
-  # function, that parse data from uploaded CSV file
-  def parse(path)
-    table = CSV.parse(File.read(path), headers: true)
-  end
 
   def call(env)
     request = Rack::Request.new(env)
     index(request)
+  end
+
+  private
+  # function, that parse data from uploaded CSV file
+  def parse(path)
+    table = CSV.parse(File.read(path), headers: true)
   end
 
   def index(request)

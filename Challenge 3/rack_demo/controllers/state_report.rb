@@ -1,7 +1,7 @@
 require 'pg'
 require 'erb'
-require './controllers/render'
-require './controllers/pg_connect'
+require './render'
+require './pg_connect'
 
 class StateReport
   include Render
@@ -10,6 +10,8 @@ class StateReport
     request = Rack::Request.new(env)
     index(request, env)
   end
+
+  private
 
   def index(request, env)
     # Make a request to Postgres db

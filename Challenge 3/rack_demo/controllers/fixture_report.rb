@@ -12,6 +12,8 @@ class FixtureReport
     index request, env
   end
 
+  private
+
   def index(request, env)
     begin
       @new_hash = {}

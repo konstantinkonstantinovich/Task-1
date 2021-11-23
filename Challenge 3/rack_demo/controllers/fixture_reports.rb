@@ -14,76 +14,43 @@ class AllFixtures
   private
 
   def index(request)
-    # get all fixtures data
-    @fixtures = CONN.exec(
-      "SELECT * FROM fixtures"
+    fixture = CONN.exec(
+         "SELECT title, address, lob, office.type office_type, fixtures.type fixture_type
+         FROM ((( fixtures
+         INNER JOIN rooms ON rooms.id = fixtures.room_id)
+         INNER JOIN zones ON zones.id = rooms.zone_id)
+         INNER JOIN offices office ON office.id = zones.office_id);"
     )
 
-    # create hash for inserting type of
-    # fixtures like key and value like
-    # offices data
-    @office = Hash.new { |h, k| h[k] = [] }
-
-    @fixtures.each do |data|
-      @office[data['type']] << CONN.exec(
-        "SELECT * FROM offices WHERE id =
-         (SELECT office_id FROM zones WHERE id =
-         (SELECT zone_id FROM rooms WHERE id = '#{data['room_id']}'))"
-      )[0]
+    @fixtures_hash = {}
+    fixture.each do |data|
+      @fixtures_hash[data["fixture_type"]] = []
     end
+
+    @fixtures_hash.each do |key, value|
+      fixture.each do |data|
+        if data["fixture_type"] == key
+          value.push(
+            {"lob" => data["lob"],
+             "address" => data["address"],
+             "title" => data["title"],
+             "type" => data["office_type"]}
+          )
+        end
+      end
+    end
+
+    @fixtures_hash.each { |key, value| @fixtures_hash[key] = value.inject(Hash.new(0)) { |memo, i| memo[i] += 1; memo } }
 
     @total_count = []
-
-    @office.each do |key, value|
-      @total_count.push(CONN.exec(
-                          "SELECT COUNT(*) FROM fixtures WHERE type = '#{key}'"
-                        ))
+    @fixtures_hash.each do |key, value|
+      total = 0
+      value.each do |k, v|
+        total += v
+      end
+      @total_count << total
     end
-
-    @office.each { |key, value| @office[key] = value.inject(Hash.new(0)) { |memo, i| memo[i] += 1; memo } }
 
     render_template 'views/fixtures.html.erb'
   end
 end
-
-# class FixtureReport
-#   include Render
-#
-#   def call(env)
-#     request = Rack::Request.new(env)
-#     index request, env
-#   end
-#
-#   def index(request, env)
-#     begin
-#       @new_hash = {}
-#       @office_title = CONN.exec("SELECT title FROM offices WHERE id = #{env['rack.route_params'][:id]}")[0]
-#
-#       puts @office_title
-#
-#       @new_hash[@office_title["title"]] = CONN.exec(
-#         "SELECT fixtures.type
-#         FROM ((( offices
-#         INNER JOIN zones ON offices.id = zones.office_id)
-#         INNER JOIN rooms ON zones.id = rooms.zone_id)
-#         INNER JOIN fixtures ON rooms.id = fixtures.room_id)
-#         WHERE offices.id = #{env['rack.route_params'][:id]};
-#         "
-#       )
-#
-#       @new_hash.each { |key, value| @new_hash[key] = value.inject(Hash.new(0)) { |memo, i| memo[i] += 1; memo } }
-#
-#       @total_count = 0
-#       @new_hash.each do |key, value|
-#         puts "#{key} => "
-#         value.each do |_k, v|
-#           @total_count += v
-#         end
-#       end
-#
-#       render_template 'views/fixture.html.erb'
-#     rescue IndexError
-#       [200, { 'Content-Type' => 'text/html'  }, ["<h1>ERROR: Non-existent id in url parameters. Change params!</h1>"]]
-#     end
-#   end
-# end

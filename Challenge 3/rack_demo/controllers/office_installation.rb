@@ -41,6 +41,8 @@ class OfficeInstallation
     index(env)
   end
 
+  private
+  
   def index(env)
     begin
       @office = CONN.exec("SELECT title, state, address, phone, type FROM offices WHERE id =

@@ -17,37 +17,28 @@ class StateReport
     # Make a request to Postgres db
     # to find all offices with a certain STATE
 
-    if env['REQUEST_URI'] == '/reports/states/ca' || env['REQUEST_URI'] == '/reports/states/ny'
+    begin
       @result = CONN.exec(
         "SELECT * from offices WHERE state = '#{env['rack.route_params'][:state].upcase}' "
       )
-    else
-      Rack::Response.new(
-        "<h1>Incorrect Url: No result for this url #{env['REQUEST_URI']}</h1> ",
-        200,
-        { 'Content-Type' => 'text/html' }
-      )
+      render_template 'views/index.html.erb'
+    rescue IndexError
+       [200, { 'Content-Type' => 'text/html' }, ["<h1>Incorrect Url: Unknown state!</h1> "]]
     end
-
-    render_template 'views/index.html.erb'
   end
 end
 
 class AllStates
   include Render
 
-  def db_connect
-    conn = PG.connect(dbname: 'bank_system', password: 'apple', port: 5432, user: 'postgres')
-  end
-
   def call(env)
     request = Rack::Request.new(env)
     index
   end
 
-  def index
-    conn = db_connect
+  private
 
+  def index
     all_office = CONN.exec(
       'SELECT state FROM offices'
     )

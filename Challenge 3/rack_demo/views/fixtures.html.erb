@@ -22,7 +22,7 @@
         </div>
       </div>
 
-      <% @office.each_with_index do |(key, value), index| %>
+      <% @fixtures_hash.each_with_index do |(key, value), index| %>
         <div class='row'>
           <div class="col-4 hr-block">
             <h2><%= key %></h2>
@@ -30,27 +30,27 @@
           <div class="col-7 hr-block"></div>
 
           <div class="col-1 hr-block">
-            <h3><%= @total_count[index][0]["count"] %></h3>
+            <h3><%= @total_count[index] %></h3>
           </div>
 
           <!-- line beetwen row one and two -->
 
           <div class="w-100 d-none d-md-block"></div>
 
-          <% value.each do |key, val| %>
+          <% value.each do |k, val| %>
             <div class="col-2">
             </div>
             <div class="col-2">
-              <div class="center"><%= key["title"]%></div>
+              <div class="center"><%= k["title"] %></div>
             </div>
             <div class="col-1">
-              <div class="center"><%= key["type"]%></div>
+              <div class="center"><%= k["type"] %></div>
             </div>
             <div class="col-4">
-              <div class="center"><%= key["address"]%></div>
+              <div class="center"><%= k["address"] %></div>
             </div>
             <div class="col-2">
-              <div class="center"><%= key["lob"]%></div>
+              <div class="center"><%= k["lob"] %></div>
             </div>
             <div class="col-1">
               <div class="center"><%= val %></div>
